@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { fetchArticleById } from "../../utils";
-import { useParams } from "react-router-dom";
+import { fetchArticleById, getArticleComments } from "../../utils";
+import { Link, useParams } from "react-router-dom";
 
 function SingleArticle() {
   const [article, setArticle] = useState("");
   let { articleId } = useParams();
+
+  const [comments, setComments] = useState([]);
+  const handleViewComments = () => {
+    if (comments.length === 0) {
+      getArticleComments(articleId)
+        .then((comments) => {
+          setComments(comments);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setComments([]);
+    }
+  };
 
   useEffect(() => {
     fetchArticleById(+articleId)
@@ -26,6 +41,17 @@ function SingleArticle() {
         alt="Article"
       />
       <p className="article-body">{article.body}</p>
+
+      <button onClick={handleViewComments}>
+        {comments.length === 0 ? "View Comments" : "Hide Comments"}
+      </button>
+      {comments.map((comment) => (
+        <div key={comment.id} className="comment-card">
+          <p>{comment.author}</p>
+          <p>posted on {comment.created_at}</p>
+          <p>{comment.body}</p>
+        </div>
+      ))}
     </div>
   );
 }

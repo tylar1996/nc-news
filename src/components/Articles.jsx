@@ -17,8 +17,8 @@ function Articles() {
 
   return (
     <div className="article-container">
-      {articles.map((article) => (
-        <div key={article.id} className="article">
+      {articles.map((article, index) => (
+        <div key={index} className="article">
           <h2>{article.title}</h2>
           <Link to={`/articles/${article.article_id}`}>
             <img src={article.article_img_url} alt="" />

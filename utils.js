@@ -12,3 +12,14 @@ export const fetchArticles = () => {
     })
     .catch((err) => console.log(err));
 };
+
+export const fetchArticleById = (article_id) => {
+  return api
+    .get(`/articles/${article_id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

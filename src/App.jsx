@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import Articles from "./components/Articles";
 import Home from "./components/Home";
 import SingleArticle from "./components/SingleArticle";
-import ViewComments from "./components/ViewComments";
 
 function App() {
   return (

@@ -8,10 +8,10 @@ function Articles() {
   useEffect(() => {
     fetchArticles()
       .then((articles) => {
-        return articles;
-      })
-      .then((articles) => {
         setArticles(articles);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 

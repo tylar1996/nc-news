@@ -24,10 +24,10 @@ function SingleArticle() {
   useEffect(() => {
     fetchArticleById(+articleId)
       .then((article) => {
-        return article;
-      })
-      .then((article) => {
         setArticle(article);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 

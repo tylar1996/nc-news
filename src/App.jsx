@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Articles from "./components/Articles";
 import Home from "./components/Home";
+import SingleArticle from "./components/SingleArticle";
 
 function App() {
   return (
@@ -11,6 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/articles" element={<Articles />} />
+
+        <Route path="/articles/:articleId" element={<SingleArticle />} />
       </Routes>
     </div>
   );

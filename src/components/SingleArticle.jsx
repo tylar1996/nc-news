@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { fetchArticleById, getArticleComments } from "../../utils";
-import { Link, useParams } from "react-router-dom";
+import { fetchArticleById, getArticleComments, voteArticle } from "../../utils";
+import { useParams } from "react-router-dom";
 
 function SingleArticle() {
   const [article, setArticle] = useState("");
@@ -21,6 +21,16 @@ function SingleArticle() {
     }
   };
 
+  const handleVote = () => {
+    voteArticle(articleId)
+      .then((vote) => {
+        setArticle(vote);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     fetchArticleById(+articleId)
       .then((article) => {
@@ -35,6 +45,7 @@ function SingleArticle() {
     <div className="single-article">
       <h2 className="article-title">{article.title}</h2>
       <p className="article-author">Author: {article.author}</p>
+
       <img
         className="article-image"
         src={article.article_img_url}
@@ -42,9 +53,13 @@ function SingleArticle() {
       />
       <p className="article-body">{article.body}</p>
 
+      <button onClick={handleVote}>Vote Here👍🏻 </button>
+      <p>{article.votes} votes</p>
+
       <button onClick={handleViewComments}>
         {comments.length === 0 ? "View Comments" : "Hide Comments"}
       </button>
+
       {comments.map((comment) => (
         <div key={comment.id} className="comment-card">
           <p>{comment.author}</p>

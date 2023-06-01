@@ -34,3 +34,14 @@ export const getArticleComments = (article_id) => {
       console.log(err);
     });
 };
+
+export const voteArticle = (article_id) => {
+  return api
+    .patch(`/articles/${article_id}`, { votes: 1 })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

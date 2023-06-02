@@ -1,37 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { fetchArticleById, getArticleComments } from "../../utils";
 import { Link, useParams } from "react-router-dom";
+import CommentCard from "./CommentCard";
 
 function SingleArticle() {
   const [article, setArticle] = useState("");
   let { articleId } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
 
   const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState(false);
-
-  const handleViewComments = () => {
-    setShowComments(!showComments);
-  };
-
-  useEffect(() => {
-    getArticleComments(articleId)
-      .then((comments) => {
-        setComments(comments);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   useEffect(() => {
     fetchArticleById(+articleId)
       .then((article) => {
-        return article;
-      })
-      .then((article) => {
         setArticle(article);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
       });
-  }, []);
+  }, [articleId]);
 
   return (
     <div className="single-article">
@@ -45,17 +34,7 @@ function SingleArticle() {
       <p className="article-body">{article.body}</p>
       <p>{article.votes} votes</p>
 
-      <button onClick={() => handleViewComments()}>
-        {showComments ? "Hide Comments" : "View Comments"}
-      </button>
-      {showComments &&
-        comments.map((comment, index) => (
-          <div key={index} className="comment-card">
-            <p>{comment.author}</p>
-            <p>posted on {comment.created_at}</p>
-            <p>{comment.body}</p>
-          </div>
-        ))}
+      <CommentCard articleId={articleId} />
     </div>
   );
 }

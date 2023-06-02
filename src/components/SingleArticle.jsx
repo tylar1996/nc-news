@@ -43,6 +43,7 @@ function SingleArticle() {
         alt="Article"
       />
       <p className="article-body">{article.body}</p>
+      <p>{article.votes} votes</p>
 
       <button onClick={() => handleViewComments()}>
         {showComments ? "Hide Comments" : "View Comments"}
